@@ -6,11 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 
@@ -21,13 +17,13 @@ public class CatApiApplication {
 
     int img = getImgNumber();
     private int getImgNumber() {
-        NameManager nmMan = new NameManager();
+        FileManager nmMan = new FileManager();
         return nmMan.readImgNumber();
     }
 
-    private String[] nameList = getCatNams();
-    private static String[] getCatNams() {
-        NameManager nmMan = new NameManager();
+    private String[] nameList = getCatNames();
+    private static String[] getCatNames() {
+        FileManager nmMan = new FileManager();
         return nmMan.readNames();
     }
 
@@ -39,7 +35,6 @@ public class CatApiApplication {
     @GetMapping("")
     public CatURL catURL() {
         int i = random();
-        //return new CatURL(String.format(template, i),getName(i-1),i,getColor(i-1));
         String url = String.format(template, i);
         return new CatURL(url,getName(i-1),i,getColor(url));
     }
@@ -51,7 +46,6 @@ public class CatApiApplication {
             if (i > img || i < 1) {
                 return catURL();
             }
-            // return new CatURL(String.format(template, i),getName(i-1),i,getColor(i-1));
             String url = String.format(template, i);
             return new CatURL(url,getName(i-1),i,getColor(url));
         } catch (Exception e) {
@@ -59,44 +53,19 @@ public class CatApiApplication {
         }
     }
 
-    private String colToHex(Color c) {
-        return String.format("%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());
-    }
 
     private String getColor(String phat) {
         try {
             URL jtUrl   = new URL(phat);
-            BufferedImage image = ImageIO.read(jtUrl);
-            Color color = getAverageColor(image);
-            return  colToHex(color);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            return ImgColor.getAverageColor(jtUrl);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static Color getAverageColor(BufferedImage bi) {
-        int step = 5;
 
-        int sampled = 0;
-        long sumr = 0, sumg = 0, sumb = 0;
-        for (int x = 0; x < bi.getWidth(); x++) {
-            for (int y = 0; y < bi.getHeight(); y++) {
-                if (x % step == 0 && y % step == 0) {
-                    Color pixel = new Color(bi.getRGB(x, y));
-                    sumr += pixel.getRed();
-                    sumg += pixel.getGreen();
-                    sumb += pixel.getBlue();
-                    sampled++;
-                }
-            }
-        }
-        int dim = bi.getWidth()*bi.getHeight();
-        return new Color(Math.round(sumr / sampled), Math.round(sumg / sampled), Math.round(sumb / sampled));
-    }
     private String getName(int i) {
-        nameList = getCatNams();
+        nameList = getCatNames();
         int arrayLng = nameList.length;
         String ret = "noName";
         if (i < arrayLng) {

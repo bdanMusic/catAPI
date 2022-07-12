@@ -5,14 +5,14 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class NameManager {
+public class FileManager {
     private File nameFile;
     private String[] nameList;
 
     private File imgNumberFile;
     private int imgNumber;
 
-    public NameManager() {
+    public FileManager() {
         //nameFile = new File("src/main/resources/names.txt");
         nameFile = new File("names.txt");
         nameList = readNames();
