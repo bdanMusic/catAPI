@@ -14,18 +14,7 @@ import java.util.Random;
 @SpringBootApplication
 public class CatApiApplication {
     private static final String template = "https://data.bdan.io/catpics/%s.jpg";
-
-    int img = getImgNumber();
-    private int getImgNumber() {
-        FileManager nmMan = new FileManager();
-        return nmMan.readImgNumber();
-    }
-
-    private String[] nameList = getCatNames();
-    private static String[] getCatNames() {
-        FileManager nmMan = new FileManager();
-        return nmMan.readNames();
-    }
+    private static final FileManager nmMan = new FileManager();
 
 
     public static void main(String[] args) {
@@ -42,6 +31,7 @@ public class CatApiApplication {
     @GetMapping("/img")
     public CatURL catURL(@RequestParam(value = "id", defaultValue = "0")String id) {
         try {
+            int img = nmMan.getImgNumber();
             int i = Integer.parseInt(id);
             if (i > img || i < 1) {
                 return catURL();
@@ -52,7 +42,6 @@ public class CatApiApplication {
             return catURL();
         }
     }
-
 
     private String getColor(String phat) {
         try {
@@ -65,18 +54,18 @@ public class CatApiApplication {
 
 
     private String getName(int i) {
-        nameList = getCatNames();
-        int arrayLng = nameList.length;
+        //nameList = getCatNames();
+        int arrayLng = nmMan.getImgList().length;
         String ret = "noName";
         if (i < arrayLng) {
-            ret = nameList[i];
+            ret = nmMan.getImgList()[i];
         }
         return ret;
     }
 
     private int random() {
-        img = getImgNumber();
+        //img = getImgNumber();
         Random rand = new Random();
-        return rand.nextInt(img)+1;
+        return rand.nextInt(nmMan.getImgNumber())+1;
     }
 }
