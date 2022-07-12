@@ -52,7 +52,6 @@ public class CatApiApplication {
         }
     }
 
-
     private String getName(int i) {
         //nameList = getCatNames();
         int arrayLng = nmMan.getImgList().length;

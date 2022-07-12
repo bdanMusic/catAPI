@@ -33,7 +33,6 @@ public class FileManager {
             }
         };
         new Thread(r).start();
-        System.err.println("WhatchDog gestartet");
     }
 
     private String getParent() {
@@ -51,7 +50,6 @@ public class FileManager {
             WatchKey key = watchService.take();
             for (WatchEvent<?> event : key.pollEvents()) {
                 WatchEvent.Kind kind = event.kind();
-                System.err.println("Event " + event.kind() + " File " + event.context().toString() + " ausgeführt");
                 if (kind == ENTRY_MODIFY) {
                     if (event.context().toString().equals("names.txt")) {
                         imgList = readNames();
