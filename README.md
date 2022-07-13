@@ -12,10 +12,12 @@ For specific URLs, use:```http://catapi.bdan.io/img?id=1```
 
 ```
 {
-    "averageColor": "826951",
-    "name": "u fr rn?",
-    "id": 109,
-    "url": "https://data.bdan.io/catpics/109.jpg"
+	"id": 80,
+	"width": 2000,
+	"height": 1500,
+	"averageColor": "827a6d",
+	"name": "PAWS",
+	"url": "https://data.bdan.io/catpics/80.jpg"
 }
 ```
 
