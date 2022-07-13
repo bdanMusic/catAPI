@@ -1,6 +1,6 @@
 # catAPI (Random Image API)
 
-An API for getting random image URL's from my cat using Spring Boot.
+An API for getting random image URL's of my cat using Spring Boot.
 
 ## Usage
 
