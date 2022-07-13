@@ -22,7 +22,6 @@ public class FileManager {
     }
 
     public FileManager() {
-        //nameFile = new File("src/main/resources/names.txt");
         nameFile = new File("names.txt");
         imgList = readNames();
         imgNumberFile = new File("imgNumber.txt");
@@ -57,13 +56,13 @@ public class FileManager {
                         imgNumber = readImgNumber();
                     }
                 } else if (kind == ENTRY_DELETE) {
-                    System.out.println("Error " + event.context().toString() + " was deleted");
+                    System.err.println("Error " + event.context().toString() + " was deleted");
                 }
             }
             poll = key.reset();
         }
         } catch (Exception e) {
-            System.out.println("Error " + e.getMessage());
+            System.err.println("Error " + e.getMessage());
         }
     }
     private int readImgNumber() {

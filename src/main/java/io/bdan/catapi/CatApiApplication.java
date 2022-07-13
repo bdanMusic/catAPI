@@ -16,6 +16,7 @@ public class CatApiApplication {
     private static final String template = "https://data.bdan.io/catpics/%s.jpg";
     private static final FileManager nmMan = new FileManager();
 
+    private ImgManager imgMan;
 
     public static void main(String[] args) {
         SpringApplication.run(CatApiApplication.class, args);
@@ -25,7 +26,7 @@ public class CatApiApplication {
     public CatURL catURL() {
         int i = random();
         String url = String.format(template, i);
-        return new CatURL(url,getName(i-1),i,getColor(url));
+        return new CatURL(url,getName(i-1),i,getColor(url),imgMan.getWidth(),imgMan.getHeight());
     }
 
     @GetMapping("/img")
@@ -37,7 +38,7 @@ public class CatApiApplication {
                 return catURL();
             }
             String url = String.format(template, i);
-            return new CatURL(url,getName(i-1),i,getColor(url));
+            return new CatURL(url,getName(i-1),i,getColor(url),imgMan.getWidth(),imgMan.getHeight());
         } catch (Exception e) {
             return catURL();
         }
@@ -46,7 +47,8 @@ public class CatApiApplication {
     private String getColor(String phat) {
         try {
             URL jtUrl   = new URL(phat);
-            return ImgColor.getAverageColor(jtUrl);
+            imgMan = new ImgManager(jtUrl);
+            return imgMan.getAverageColor();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

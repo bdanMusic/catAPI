@@ -7,24 +7,34 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ImgColor {
-    BufferedImage bi;
+public class ImgManager {
+    private BufferedImage bi;
+    private int width;
+    private int height;
 
-    private ImgColor (URL imgUrl) throws MalformedURLException, IOException {
+
+    public ImgManager(URL imgUrl) throws MalformedURLException, IOException {
         bi = ImageIO.read(imgUrl);
+        width = bi.getWidth();
+        height = bi.getHeight();
     }
 
-    public static String getAverageColor(URL imgUrl) throws IOException {
-        ImgColor imGl = new ImgColor(imgUrl);
-        Color cl = imGl.getAverageColor();
-        return imGl.colToHex(cl);
+    public int getWidth() {
+        return width;
+    }
 
+    public int getHeight() {
+        return height;
+    }
+    public String getAverageColor() throws IOException {
+        Color cl = this.getAverColor();
+        return this.colToHex(cl);
     }
     private String colToHex(Color c) {
         return String.format("%02x%02x%02x", c.getRed(), c.getGreen(), c.getBlue());
     }
 
-    private Color getAverageColor() {
+    private Color getAverColor() {
         int step = 5;
 
         int sampled = 0;
