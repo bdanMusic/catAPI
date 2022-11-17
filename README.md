@@ -27,7 +27,6 @@ For specific URLs, use:```http://catapi.bdan.io/img?id=1```
 - frost
 - anna
 - Zurqee
+- Kirai
 
 for helping me to give names to all pictures.
-
-And my dad for helping me to code this! :)
