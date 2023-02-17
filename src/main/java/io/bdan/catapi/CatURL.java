@@ -10,16 +10,14 @@ public class CatURL {
     private final String averageColor;
     private final int width;
     private final int height;
-    private final String test;
 
-    public CatURL(String URL, String name, int id, String averageColor, int width, int height, String test) {
+    public CatURL(String URL, String name, int id, String averageColor, int width, int height) {
         this.URL = URL;
         this.Name = name;
         this.ID = id;
         this.averageColor = averageColor;
         this.width = width;
         this.height = height;
-        this.test = test;
     }
 
     public String getURL() {
@@ -44,9 +42,5 @@ public class CatURL {
 
     public int getHeight() {
         return height;
-    }
-
-    public String getTest() {
-        return test;
     }
 }
