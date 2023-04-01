@@ -30,23 +30,44 @@ public class CatApiApplication {
     }
 
     @GetMapping("/img")
-    public CatURL catURL(@RequestParam(value = "id", defaultValue = "0")String id) {
+    public CatURL catURL(@RequestParam(value = "id", defaultValue = "0")String id, @RequestParam(value = "legacy", defaultValue = "false")boolean legacy) {
         try {
             int img = nmMan.getImgNumber();
             int i = Integer.parseInt(id);
-            if (i > img || i < 1) {
-                return catURL();
+            if (legacy) {
+                if (i > img || i < 1) {
+                    return catURL();
+                }
             }
             String url = String.format(template, i);
             return new CatURL(url,getName(i-1),i,getColor(url),imgMan.getWidth(),imgMan.getHeight());
         } catch (Exception e) {
-            return catURL();
+            return null;
         }
+    }
+
+    @GetMapping("/urlList")
+    public String[] urlList() {
+        String[] ret = new String[nmMan.getImgNumber()];
+        for (int i = 0; i < nmMan.getImgNumber(); i++) {
+            ret[i] = String.format(template, i+1);
+        }
+        return ret;
+    }
+
+    @GetMapping("/nameList")
+    public String[] names() {
+        return nmMan.getImgList();
+    }
+
+    @GetMapping("/idCount")
+    public int imgNumber() {
+        return nmMan.getImgNumber();
     }
 
     private String getColor(String phat) {
         try {
-            URL jtUrl   = new URL(phat);
+            URL jtUrl = new URL(phat);
             imgMan = new ImgManager(jtUrl);
             return imgMan.getAverageColor();
         } catch (IOException e) {
@@ -55,7 +76,6 @@ public class CatApiApplication {
     }
 
     private String getName(int i) {
-        //nameList = getCatNames();
         int arrayLng = nmMan.getImgList().length;
         String ret = "noName";
         if (i < arrayLng) {
@@ -65,8 +85,9 @@ public class CatApiApplication {
     }
 
     private int random() {
-        //img = getImgNumber();
         Random rand = new Random();
         return rand.nextInt(nmMan.getImgNumber())+1;
     }
+
 }
+

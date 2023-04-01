@@ -26,17 +26,15 @@ public class FileManager {
         imgList = readNames();
         imgNumberFile = new File("imgNumber.txt");
         imgNumber = readImgNumber();
-        Runnable r = new Runnable() {
-            public void run() {
-                fileWatch(getParent());;
-            }
+        Runnable r = () -> {
+            fileWatch(getParent());;
         };
         new Thread(r).start();
     }
 
     private String getParent() {
         String ret = nameFile.getAbsolutePath();
-        ret = ret.substring(0, ret.lastIndexOf('/'));
+        ret = ret.substring(0, ret.lastIndexOf('\\'));
         return ret;
     }
     private void fileWatch(String pt) {
@@ -70,6 +68,7 @@ public class FileManager {
             String imgNumberString = new String(Files.readAllBytes(Paths.get(imgNumberFile.getAbsolutePath())), Charset.defaultCharset());
             return Integer.parseInt(imgNumberString);
         } catch (Exception e) {
+            System.out.println("Error reading names.txt");
             return 0;
         }
     }
@@ -78,9 +77,13 @@ public class FileManager {
         String[] ret = new String[0];
         try {
             String[] lines = new String(Files.readAllBytes(Paths.get(nameFile.getAbsolutePath())), Charset.defaultCharset()).split("\n");
+            for (int i = 0; i < lines.length; i++) {
+                lines[i] = lines[i].replace("\r", "");
+            }
             ret = lines;
         } catch (Exception e) {
             System.out.println("Error reading names.txt");
+            return ret;
         }
         return ret;
     }

@@ -7,17 +7,22 @@ An API for getting random image URL's of my cat using Spring Boot.
 For random image URLs, use: ```http://catapi.bdan.io```
 
 For specific image URLs, use:```http://catapi.bdan.io/img?id=1```
+(for legacy mode, use: ```http://catapi.bdan.io/img?id=1&legacy=true```)
+
+To get a list of all image URLs, use: ```http://catapi.bdan.io/urlList```
+To get a list of all image names, use: ```http://catapi.bdan.io/nameList```
+To get the current number of images, use: ```http://catapi.bdan.io/idCount```
 
 ## Sample Response
 
 ```
 {
-	"id": 80,
+	"id": 119,
 	"width": 2000,
 	"height": 1500,
-	"averageColor": "827a6d",
-	"name": "PAWS",
-	"url": "https://data.bdan.io/catpics/80.jpg"
+	"averageColor": "5d4d3f",
+	"name": "ATTAC ON TOY",
+	"url": "https://data.bdan.io/catpics/119.jpg"
 }
 ```
 
