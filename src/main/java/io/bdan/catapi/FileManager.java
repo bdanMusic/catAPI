@@ -34,7 +34,7 @@ public class FileManager {
 
     private String getParent() {
         String ret = nameFile.getAbsolutePath();
-        ret = ret.substring(0, ret.lastIndexOf('\\'));
+        ret = ret.substring(0, ret.lastIndexOf('/'));
         return ret;
     }
     private void fileWatch(String pt) {
